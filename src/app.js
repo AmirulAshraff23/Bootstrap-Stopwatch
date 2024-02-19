@@ -4,23 +4,29 @@ let seconds = 0;
 let milliseconds = 0;
 
 function startTimer() {
-    timer = setInterval(function () {
-        milliseconds++;
-        if (milliseconds === 1000) {
-            milliseconds = 0;
-            seconds++;
-            if (seconds === 60) {
-                seconds = 0;
-                minutes++;
+    // Check if the timer is already running
+    if (!timer) {
+        timer = setInterval(function () {
+            milliseconds++;
+            if (milliseconds === 1000) {
+                milliseconds = 0;
+                seconds++;
+                if (seconds === 60) {
+                    seconds = 0;
+                    minutes++;
+                }
             }
-        }
-        updateDisplay();
-    }, 1); // Change the interval to 1 millisecond for more accurate timing
+            updateDisplay();
+        }, 1); // Change the interval to 1 millisecond for more accurate timing
+    }
 }
+
 
 function stopTimer() {
     clearInterval(timer);
+    timer = null; // Set timer to null when stopping
 }
+
 
 function resetTimer() {
     minutes = 0;
@@ -38,8 +44,9 @@ function lap() {
     lapList.appendChild(lapEntry);
 }
 
-function lapClear (){
-    clearInterval (lapList);
+function lapClear() {
+    const lapList = document.getElementById('lapList');
+    lapList.innerHTML = ''; // Clears the content of the lapList
 }
 
 function updateDisplay() {
@@ -61,3 +68,41 @@ document.getElementById('stopButton').addEventListener('click', stopTimer);
 document.getElementById('resetButton').addEventListener('click', resetTimer);
 document.getElementById('lapButton').addEventListener('click', lap);
 document.getElementById('lapClearButton').addEventListener('click', lapClear);
+
+
+
+
+
+// Keyboard event listeners for other keys
+// ... (your existing code)
+
+// Keyboard event listeners
+document.addEventListener('keydown', function (event) {
+    switch (event.key) {
+        case 'a':
+            // 'a' key for play
+            startTimer();
+            break;
+        case 's':
+            // 's' key for stop
+            stopTimer();
+            break;
+        case 'Backspace':
+            // Backspace key for reset
+            resetTimer();
+            break;
+        case 'Enter':
+            // Enter key for lap and Shift+Enter for lap clear
+            if (event.shiftKey) {
+                lapClear();
+            } else {
+                lap();
+            }
+            break;
+        default:
+            break;
+    }
+});
+
+// ... (rest of your existing code)
+
