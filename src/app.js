@@ -71,11 +71,6 @@ document.getElementById('lapClearButton').addEventListener('click', lapClear);
 
 
 
-
-
-// Keyboard event listeners for other keys
-// ... (your existing code)
-
 // Keyboard event listeners
 document.addEventListener('keydown', function (event) {
     switch (event.key) {
@@ -104,5 +99,5 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-// ... (rest of your existing code)
+
 
